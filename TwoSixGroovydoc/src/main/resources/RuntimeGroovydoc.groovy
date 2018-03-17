@@ -5,8 +5,9 @@ class Foo {
     def baz() { }
 }
 
-def getDoc(String name) {
-    Foo.methods.find{ it.name == name }.getAnnotation(Groovydoc)
+def docForMethod(String name) {
+//    Foo.methods.find{ it.name == name }.getAnnotation(Groovydoc).value()
+    Foo.methods.find{ it.name == name }.groovydoc.content
 }
-assert getDoc('bar').value().contains('@Groovydoc fo fum')
-assert getDoc('baz').value().contains('Hard-coded')
+assert docForMethod('bar').contains('@Groovydoc fo fum')
+assert docForMethod('baz').contains('Hard-coded')
