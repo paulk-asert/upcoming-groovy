@@ -1,0 +1,22 @@
+plugins {
+    id 'com.github.ben-manes.versions' version '0.15.0'
+}
+
+allprojects {
+    if (project.name.contains('Java')) {
+        apply plugin: 'java'
+    } else {
+        apply plugin: 'groovy'
+    }
+    apply plugin: 'idea'
+    apply plugin: 'eclipse'
+    repositories {
+        jcenter()
+    }
+}
+
+idea {
+    project {
+        vcs = 'Git'
+    }
+}

@@ -1,0 +1,12 @@
+def subprojects = [
+        'AstTransforms',
+        'TwoFiveMisc',
+        'TwoSixMisc',
+        'TwoSixGroovydoc',
+        'Macros'
+]
+subprojects.each {
+    include it
+}
+
+rootProject.name = 'upcoming-groovy'

@@ -1,0 +1,34 @@
+repositories {
+    mavenLocal()
+}
+
+dependencies {
+    compile "org.codehaus.groovy:groovy-all:2.6.0-alpha-1"
+    runtime "commons-cli:commons-cli:1.4"
+}
+
+task runScripts {
+    description = 'run all scripts in src/main/resources'
+    doLast {
+        file('src/main/resources').eachFile { script ->
+            ant.echo script
+            javaexec {
+                classpath = sourceSets.main.runtimeClasspath
+                main = 'groovy.ui.GroovyMain'
+                systemProperty 'groovy.antlr4', 'true'
+                systemProperty 'groovy.attach.groovydoc', 'true'
+                systemProperty 'groovy.attach.runtime.groovydoc', 'true'
+                args = [script.path]
+            }
+        }
+    }
+}
+
+task console(type: JavaExec) {
+    if (rootProject.hasProperty('useAntlr4')) {
+        jvmArgs += ["-Dgroovy.antlr4=true", "-Dgroovy.attach.groovydoc=true"]
+    }
+
+    main = 'groovy.ui.Console'
+    classpath = sourceSets.main.runtimeClasspath
+}
