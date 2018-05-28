@@ -3,7 +3,7 @@ repositories {
 }
 
 dependencies {
-    compile "org.codehaus.groovy:groovy-all:2.6.0-alpha-1"
+    compile "org.codehaus.groovy:groovy-all:2.6.0-alpha-3"
     runtime "commons-cli:commons-cli:1.4"
 }
 

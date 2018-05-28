@@ -3,6 +3,9 @@ def subprojects = [
         'TwoFiveMisc',
         'TwoSixMisc',
         'TwoSixGroovydoc',
+        'CustomCanonicalExercise',
+        'CustomCanonicalSolution',
+        'MacrosIntro',
         'Macros'
 ]
 subprojects.each {

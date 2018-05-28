@@ -1,0 +1,200 @@
+= Lab Instructions
+:icons: font
+
+== Files Of Interest
+- `src/main/groovy/CustomCanonical.groovy`
+- `src/test/groovy/CustomCanonicalTest.groovy`
+
+This lab gives you the opportunity to learn about
+annotation collectors and you will also gain some familiarity
+with some of the annotation attribute customization options
+available for a few of Groovy's built in AST transformations.
+
+== Notes
+
+The lab is designed to run with Groovy 2.5.0-beta-2.
+Gradle should download that version automatically the
+first time it is run if you don't already have it.
+The labs were tested with JDK8. You may get warning messages
+running with JDK9.
+
+The tests initially will fail.  You will need to add code
+to `CustomCanonical.groovy` in order to satisfy the
+tests.  You do not need to make any changes to the tests
+to complete this lab.
+
+=== Running The Tests
+
+The `test` Gradle task will run the unit tests.
+
+```
+$ ./gradlew test
+  :compileJava NO-SOURCE
+  :compileGroovy
+  :processResources NO-SOURCE
+  :classes
+  :compileTestJava NO-SOURCE
+  :compileTestGroovy
+  :processTestResources NO-SOURCE
+  :testClasses
+  :test
+
+  CustomCanonicalTest > testSortable FAILED
+      groovy.lang.GroovyRuntimeException at CustomCanonicalTest.groovy:19
+
+  CustomCanonicalTest > testInitialInToString FAILED
+      groovy.lang.GroovyRuntimeException at CustomCanonicalTest.groovy:13
+
+  CustomCanonicalTest > testFirstLastConstructorButNoFirstInToString FAILED
+      groovy.lang.GroovyRuntimeException at CustomCanonicalTest.groovy:3
+
+  CustomCanonicalTest > testNullPropsNotInToString FAILED
+      groovy.lang.GroovyRuntimeException at CustomCanonicalTest.groovy:8
+
+  4 tests completed, 4 failed
+  :test FAILED
+
+  FAILURE: Build failed with an exception.
+
+  * What went wrong:
+  Execution failed for task ':test'.
+  > There were failing tests. See the report at: file:///your/path/CustomCanonicalExercise/build/reports/tests/test/index.html
+
+  * Try:
+  Run with --stacktrace option to get the stack trace. Run with --info or --debug option to get more log output.
+
+  BUILD FAILED
+
+Total time: 5.449 secs
+```
+
+NOTE: On OS X and Linux the tests may be run with `./gradlew test`.  On Windows the tests may be run with `gradlew test`.
+`gradlew` is the Gradle Wrapper which will download Gradle the first time it is run.  This download only happens the first
+time `gradlew` is run for any particular version of Gradle.
+
+The output written to the console mentions that the test report
+is available at `build/reports/tests/index.html`.  That report will include
+details describing what went wrong while tests were running.
+
+== Import The Project Into IDEA 2017
+
+Select "Open" and use the file navigator to select the root folder for the project.
+
+image::import_02.png[width=750]
+
+On the Import Project from Gradle dialog that follows, leave the default settings unchanged.
+
+image::import_03.png[width=750]
+
+The first time you open a Groovy project in the IDE, the IDE may
+take a few minutes to resolve and index dependencies.  Once the project
+is initialized, you should be able to navigate to the source files
+that are relevant to this lab.
+
+image::idea_project.png[width=750]
+
+=== Satisfying CustomCanonicalTest
+
+The `CustomCanonicalTest` describes the behavior we are expecting our
+`CustomCanonical` annotation to support.
+
+[source,groovy]
+----
+include::{projectdir}/src/test/groovy/CustomCanonicalTest.groovy[]
+----
+
+Initially, the custom annotation has the same effective
+definition as the standard `@Canonical` annotation.
+Your organization has decided to provide it's own
+customized annotation for canonical-like classes.
+The tests capture some of the desired properties
+of the custom annotation.
+
+In order to satisfy the test, you will need to
+add various annotation attributes and perhaps additional
+annotations to your custom annotation. You should consult
+the documentation for each AST transformation annotation
+to see what attributes are available.
+
+Hint: the first thing you will notice is that most of the
+tests fail creating the sample test objects. You'll want
+to fix that first. Instead of a tuple constructor with
+(UUID, String, String, String) arguments, you need to
+be able to supply just (String, String) or (String) variations.
+The UUID property is set internally by the class and never
+needs to be considered within the constructor. You might
+consider excluding it from inclusion in the tuple constructor
+generation.
+
+You may wish to review the slide material related
+to annotation collectors. You might remember that you
+can either provide a list of annotations to collect:
+
+[source,groovy]
+----
+@AnnotationCollector(value=[ToString, TupleConstructor, EqualsAndHashCode],
+                     mode=AnnotationCollectorMode.PREFER_EXPLICIT_MERGED)
+public @interface Canonical { }
+----
+
+Or alternatively, supply all the annotations you want to collect
+as siblings of the `@AnnotationCollector` annotation.
+
+[source,groovy]
+----
+@AnnotationCollector
+@ToString(excludes='id,first', includeNames=true)
+@EqualsAndHashCode
+@TupleConstructor(excludes='id')
+@interface MyCanonical {}
+----
+
+For the `testSortable` test, you may wish to review the
+slide material related to `@Sortable`. Here is the example:
+
+[source,groovy]
+----
+@Sortable(includes = 'last,initial')
+class Politician {
+    String first
+    Character initial
+    String last
+
+    String initials() { first[0] + initial + last[0] }
+}
+
+def politicians = [
+    new Politician(first: 'Margaret', initial: 'H', last: 'Thatcher'),
+    new Politician(first: 'George', initial: 'W', last: 'Bush')
+]
+
+politicians.with {
+    assert sort()*.initials() == ['GWB', 'MHT']
+    def comparator = Politician.comparatorByInitial()
+    assert toSorted(comparator)*.initials() == ['MHT', 'GWB']
+}
+----
+
+You will know you have completed the lab when
+the Gradle build says `BUILD SUCCESSFUL` or if
+you have a green bar within your IDE:
+
+image::idea_test_success.png[width=750]
+
+You should see 4 successful tests (or more if you have also
+completed some of the advanced challenges).
+
+=== Advanced challenge
+
+The `CustomCanonicalTest` class contains some commented out
+tests. Remove the comment characters for one or more of those tests
+and make the added test(s) pass without invalidating any of the existing tests.
+
+In order to satisfy the test, you will need to
+further alter the `CustomCanonical` annotation. The intention
+is not to modify the `Person` class within the test file.
+Hints:
+
+- you can supply more than one `TupleConstructor` to a class provided you do it in a particular way
+- consider adding a builder
+- consider adding another annotation related to final parameters
