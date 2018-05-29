@@ -1,7 +1,7 @@
 class StringMacroMethodsTest extends GroovyTestCase {
     void testUpper() {
         assertScript '''
-            def foo = upper('FooScript')
+            def foo = upper('Foo')
             assert foo == 'FOO'
         '''
         def msg = shouldFail '''
