@@ -1,0 +1,56 @@
+= Lab Instructions
+:icons: font
+
+== Files Of Interest
+- `<projectdir>/src/main/groovy/CustomCanonical.groovy`
+- `<projectdir>/src/test/groovy/CustomCanonicalTest.groovy`
+
+This lab gives you the opportunity to learn about
+annotation collectors and you will also gain some familiarity
+with some of the annotation attribute customization options
+available for a few of Groovy's built in AST transformations.
+
+== Notes
+
+The lab is designed to run with Groovy 2.5.0-rc-3.
+Gradle should download that version automatically the
+first time it is run if you don't already have it.
+The labs were tested with JDK8. You may get warning messages
+running with JDK9 or later.
+
+Once `CustomCanonical.groovy` is complete, the tests should run.
+
+=== Running The Tests
+
+The `test` Gradle task will run the unit tests.
+
+```
+$ ./gradlew :CustomCanonicalSolution:test
+
+BUILD SUCCESSFUL in 8s
+```
+
+NOTE: On OS X and Linux the tests may be run with `./gradlew :CustomCanonicalSolution:test`.  On Windows the tests may be run with `gradlew :CustomCanonicalSolution:test`.
+`gradlew` is the Gradle Wrapper which will download Gradle the first time it is run.  This download only happens the first
+time `gradlew` is run for any particular version of Gradle.
+
+The output written to the console mentions that the test report
+is available at `<projectdir>/build/reports/tests/index.html`.  That report will include
+details describing what went wrong while tests were running.
+
+=== Satisfying CustomCanonicalTest
+
+The `CustomCanonicalTest` describes the behavior we are expecting our
+`CustomCanonical` annotation to support.
+
+[source,groovy]
+----
+include::{projectdir}/src/test/groovy/CustomCanonicalTest.groovy[]
+----
+
+The `CustomCanonical` class describes our solution:
+
+[source,groovy]
+----
+include::{projectdir}/src/main/groovy/CustomCanonical.groovy[]
+----

@@ -1,5 +1,5 @@
 To build the lab documentation run the following:
 
-    ./gradlew asciidoctor (skip the initial ./ for windows)
+    ./gradlew :CustomCanonicalExercise:asciidoc (skip the initial ./ for windows)
 
-The generated documentation should be at build/asciidoc/index.html.
+The generated documentation should be at CustomCanonicalExercise/build/asciidoc/index.html.

@@ -2,8 +2,8 @@
 :icons: font
 
 == Files Of Interest
-- `src/main/groovy/CustomCanonical.groovy`
-- `src/test/groovy/CustomCanonicalTest.groovy`
+- `<projectdir>/src/main/groovy/CustomCanonical.groovy`
+- `<projectdir>/src/test/groovy/CustomCanonicalTest.groovy`
 
 This lab gives you the opportunity to learn about
 annotation collectors and you will also gain some familiarity
@@ -12,11 +12,11 @@ available for a few of Groovy's built in AST transformations.
 
 == Notes
 
-The lab is designed to run with Groovy 2.5.0-beta-2.
+The lab is designed to run with Groovy 2.5.0-rc-3.
 Gradle should download that version automatically the
 first time it is run if you don't already have it.
 The labs were tested with JDK8. You may get warning messages
-running with JDK9.
+running with JDK9 or later.
 
 The tests initially will fail.  You will need to add code
 to `CustomCanonical.groovy` in order to satisfy the
@@ -28,70 +28,38 @@ to complete this lab.
 The `test` Gradle task will run the unit tests.
 
 ```
-$ ./gradlew test
-  :compileJava NO-SOURCE
-  :compileGroovy
-  :processResources NO-SOURCE
-  :classes
-  :compileTestJava NO-SOURCE
-  :compileTestGroovy
-  :processTestResources NO-SOURCE
-  :testClasses
-  :test
+$ ./gradlew :CustomCanonicalExercise:test
+> Task :CustomCanonicalExercise:test FAILED
 
-  CustomCanonicalTest > testSortable FAILED
-      groovy.lang.GroovyRuntimeException at CustomCanonicalTest.groovy:19
+CustomCanonicalTest > testSortable FAILED
+    groovy.lang.GroovyRuntimeException at CustomCanonicalTest.groovy:21
 
-  CustomCanonicalTest > testInitialInToString FAILED
-      groovy.lang.GroovyRuntimeException at CustomCanonicalTest.groovy:13
+CustomCanonicalTest > testInitialInToString FAILED
+    groovy.lang.GroovyRuntimeException at CustomCanonicalTest.groovy:15
 
-  CustomCanonicalTest > testFirstLastConstructorButNoFirstInToString FAILED
-      groovy.lang.GroovyRuntimeException at CustomCanonicalTest.groovy:3
+CustomCanonicalTest > testFirstLastConstructorButNoFirstInToString FAILED
+    groovy.lang.GroovyRuntimeException at CustomCanonicalTest.groovy:5
 
-  CustomCanonicalTest > testNullPropsNotInToString FAILED
-      groovy.lang.GroovyRuntimeException at CustomCanonicalTest.groovy:8
+CustomCanonicalTest > testNullPropsNotInToString FAILED
+    groovy.lang.GroovyRuntimeException at CustomCanonicalTest.groovy:10
 
-  4 tests completed, 4 failed
-  :test FAILED
+4 tests completed, 4 failed
 
-  FAILURE: Build failed with an exception.
+FAILURE: Build failed with an exception.
 
-  * What went wrong:
-  Execution failed for task ':test'.
-  > There were failing tests. See the report at: file:///your/path/CustomCanonicalExercise/build/reports/tests/test/index.html
-
-  * Try:
-  Run with --stacktrace option to get the stack trace. Run with --info or --debug option to get more log output.
-
-  BUILD FAILED
-
-Total time: 5.449 secs
+* What went wrong:
+Execution failed for task ':CustomCanonicalExercise:test'.
+  > There were failing tests. See the report at: file:///<projectdir>/build/reports/tests/test/index.html
+[...]
 ```
 
-NOTE: On OS X and Linux the tests may be run with `./gradlew test`.  On Windows the tests may be run with `gradlew test`.
+NOTE: On OS X and Linux the tests may be run with `./gradlew :CustomCanonicalExercise:test`.  On Windows the tests may be run with `gradlew :CustomCanonicalExercise:test`.
 `gradlew` is the Gradle Wrapper which will download Gradle the first time it is run.  This download only happens the first
 time `gradlew` is run for any particular version of Gradle.
 
 The output written to the console mentions that the test report
-is available at `build/reports/tests/index.html`.  That report will include
+is available at `<projectdir>/build/reports/tests/index.html`.  That report will include
 details describing what went wrong while tests were running.
-
-== Import The Project Into IDEA 2017
-
-Select "Open" and use the file navigator to select the root folder for the project.
-
-image::import_02.png[width=750]
-
-On the Import Project from Gradle dialog that follows, leave the default settings unchanged.
-
-image::import_03.png[width=750]
-
-The first time you open a Groovy project in the IDE, the IDE may
-take a few minutes to resolve and index dependencies.  Once the project
-is initialized, you should be able to navigate to the source files
-that are relevant to this lab.
-
-image::idea_project.png[width=750]
 
 === Satisfying CustomCanonicalTest
 

@@ -1,3 +1,5 @@
+import org.codehaus.groovy.control.CompilationFailedException
+
 class CustomCanonicalTest extends GroovyTestCase {
     void testFirstLastConstructorButNoFirstInToString() {
         def captain = new Person('James', 'Kirk')
