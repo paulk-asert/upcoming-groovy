@@ -16,9 +16,8 @@ def ast = new CompilationUnit().tap {
     '''
     compile Phases.SEMANTIC_ANALYSIS
 }.ast
-def getDoc(node) { node.nodeMetaData[DOC_COMMENT].content }
-def myClass = ast.classes[0]
-def myClassDoc = getDoc(myClass)
-def myMethodDoc = getDoc(myClass.methods[0])
-assert myClassDoc.contains('class doco')
-assert myMethodDoc.contains('method doco')
+
+def classDoc = ast.classes[0].groovydoc
+assert classDoc.content.contains('class doco')
+def methodDoc = ast.classes[0].methods[0].groovydoc
+assert methodDoc.content.contains('method doco')

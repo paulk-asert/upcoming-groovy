@@ -1,34 +1,45 @@
 class FromResource extends ByteArrayInputStream {
-    boolean closed = false
-
     @Override
     void close() throws IOException {
         super.close()
-        closed = true
+        println "FromResource closing"
     }
 
     FromResource(String input) {
-        super(input.bytes)
+        super(input.toLowerCase().bytes)
     }
 }
 
 class ToResource extends ByteArrayOutputStream {
-    boolean closed = false
-
     @Override
     void close() throws IOException {
         super.close()
-        closed = true
+        println "ToResource closing"
     }
 }
 
-try(
-        FromResource from = new FromResource("ARM was here!")
-        ToResource to = new ToResource()
-) {
-    to << from
-} finally {
-    assert from.closed
-    assert to.closed
-    assert to.toString() == 'ARM was here!'
+def wrestle(s) {
+    try (
+            FromResource from = new FromResource(s)
+            ToResource to = new ToResource()
+    ) {
+        to << from
+        return to.toString()
+    }
 }
+
+assert wrestle("ARM was here!").contains('arm')
+// output:
+//ToResource closing
+//FromResource closing
+
+def wrestle2(s) {
+    new FromResource(s).withCloseable { from ->
+        new ToResource().withCloseable { to ->
+            to << from
+            return to.toString()
+        }
+    }
+}
+
+assert wrestle2("ARM was here!").contains('arm')
