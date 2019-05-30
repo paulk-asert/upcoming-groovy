@@ -1,5 +1,6 @@
-import groovy.transform.*
+package canonical.includes
 
+import groovy.transform.*
 
 
 @Canonical(includeNames=true)

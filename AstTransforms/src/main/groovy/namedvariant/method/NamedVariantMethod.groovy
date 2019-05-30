@@ -1,3 +1,5 @@
+package namedvariant.method
+
 import groovy.transform.*
 
 class Animal {

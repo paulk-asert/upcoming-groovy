@@ -1,3 +1,5 @@
+package namedvariant.constructor
+
 import groovy.transform.*
 import static groovy.transform.options.Visibility.*
 

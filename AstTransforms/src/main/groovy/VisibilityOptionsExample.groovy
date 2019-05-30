@@ -1,3 +1,5 @@
+package temp
+
 import groovy.transform.*
 import static groovy.transform.options.Visibility.PRIVATE
 

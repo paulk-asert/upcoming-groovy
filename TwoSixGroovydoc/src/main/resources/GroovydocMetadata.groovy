@@ -1,6 +1,6 @@
 import org.codehaus.groovy.control.*
 
-import static groovy.lang.groovydoc.GroovydocHolder.DOC_COMMENT
+//import static groovy.lang.groovydoc.GroovydocHolder.DOC_COMMENT
 
 // set these first
 //System.setProperty('groovy.attach.groovydoc', 'true')

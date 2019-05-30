@@ -1,6 +1,6 @@
+package canonical.excludes
+
 import groovy.transform.*
-
-
 
 @Canonical(excludes='last')
 class Golfer {

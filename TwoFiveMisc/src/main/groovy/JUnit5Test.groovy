@@ -1,7 +1,7 @@
 import org.junit.jupiter.api.*
 // other imports not shown ...
 
-class MyTest {
+class JUnit5Test {
     @Test
     void streamSum() {
         assert Stream.of(1, 2, 3).mapToInt{ i -> i }.sum() > 5
