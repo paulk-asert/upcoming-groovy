@@ -1,0 +1,15 @@
+repositories {
+    mavenLocal()
+}
+
+dependencies {
+    compile "org.codehaus.groovy:groovy-all:2.5.8"
+    runtime "commons-cli:commons-cli:1.4"
+    compile "org.junit.jupiter:junit-jupiter-params:5.5.1"
+    runtime 'net.jqwik:jqwik:1.2.0'
+}
+
+task console(type: JavaExec) {
+    main = 'groovy.ui.Console'
+    classpath = sourceSets.main.runtimeClasspath
+}
