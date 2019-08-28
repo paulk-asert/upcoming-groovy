@@ -1,4 +1,4 @@
-@Grab('net.jqwik:jqwik:1.1.3')
+//@Grab('net.jqwik:jqwik:1.2.0')
 import net.jqwik.api.*
 
 class PropertyBasedTests {
