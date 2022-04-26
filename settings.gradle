@@ -1,12 +1,11 @@
 def subprojects = [
-        'AstTransforms',
-        'TwoFiveMisc',
-        'TwoSixMisc',
-        'TwoSixGroovydoc',
-        'CustomCanonicalExercise',
-        'CustomCanonicalSolution',
-        'MacrosIntro',
-        'Macros'
+//        'AstTransforms',
+//        'TwoFiveMisc',
+        'Four',
+//        'CustomCanonicalExercise',
+//        'CustomCanonicalSolution',
+//        'MacrosIntro',
+//        'Macros'
 ]
 subprojects.each {
     include it

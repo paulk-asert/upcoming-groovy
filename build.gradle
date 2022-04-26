@@ -11,11 +11,12 @@ allprojects {
     apply plugin: 'idea'
     apply plugin: 'eclipse'
     repositories {
-        jcenter()
-        maven { url "http://oss.sonatype.org/content/repositories/snapshots/" }
+        mavenCentral()
+//    mavenLocal()
+//        maven { url "http://oss.sonatype.org/content/repositories/snapshots/" }
     }
     dependencies {
-        testCompile 'org.spockframework:spock-core:1.2-groovy-2.4-SNAPSHOT'
+//        testCompile 'org.spockframework:spock-core:1.2-groovy-2.4'
     }
 }
 

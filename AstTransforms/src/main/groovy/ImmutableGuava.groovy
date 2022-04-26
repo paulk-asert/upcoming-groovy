@@ -2,7 +2,7 @@ import groovy.transform.Immutable
 //import paulk.transform.construction.GuavaImmutablePropertyHandler
 class GuavaImmutablePropertyHandler {}
 
-@Immutable(propertyHandler=GuavaImmutablePropertyHandler)
+@Immutable(/*propertyHandler=GuavaImmutablePropertyHandler*/)
 class PersonGuava {
     List names = ['John', 'Smith']
     List books = ['GinA', 'ReGinA']
