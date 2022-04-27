@@ -1,5 +1,3 @@
-package contracts
-
 import groovy.contracts.*
 
 @Invariant({ speed() >= 0 })

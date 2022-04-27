@@ -1,5 +1,3 @@
-package sealed.material5
-
 sealed abstract class Material permits Straw, Wood, Brick {
     String warranty() {
         switch(this) {

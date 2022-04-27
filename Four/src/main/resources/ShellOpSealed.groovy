@@ -1,5 +1,3 @@
-package sealed.shellop3
-
 sealed abstract class ShellOp permits Multiply, Add {
     abstract String getOp()
     def calc(int one, int two) {

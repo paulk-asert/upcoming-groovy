@@ -1,9 +1,7 @@
-package sealed.material1
-
-abstract class Material {
+sealed abstract class Material permits Straw, Wood, Brick {
     abstract String getColor()
     String toString() {
-        "${getClass().simpleName} with color ${color.toLowerCase()}"
+        "${getClass().name} with color ${color.toLowerCase()}"
     }
 }
 
@@ -17,3 +15,7 @@ assert materials*.toString() == [
         'Wood with color brown',
         'Brick with color red'
 ]
+
+//class Glass extends Material {
+//    String color = null // transparent
+//}

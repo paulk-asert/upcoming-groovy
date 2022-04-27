@@ -1,5 +1,3 @@
-package sealed.material4
-
 abstract class Material {
     String warranty() {
         switch(this) {

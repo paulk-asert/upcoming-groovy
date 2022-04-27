@@ -1,5 +1,3 @@
-package switchx.weekend1
-
 enum Day { Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday }
 
 import static Day.*
@@ -10,5 +8,5 @@ def isWeekend(Day d) {
     }
 }
 
-assert [Sunday, Monday, Friday].collect{ isWeekend(it) }
-        == [true, false, false]
+def days = [Sunday, Monday, Friday]
+assert days.collect(this::isWeekend) == [true, false, false]

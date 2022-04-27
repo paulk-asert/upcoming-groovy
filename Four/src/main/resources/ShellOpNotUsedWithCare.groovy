@@ -1,5 +1,3 @@
-package sealed.shellop2
-
 abstract class ShellOp {
     abstract String getOp()
     def calc(int one, int two) {
