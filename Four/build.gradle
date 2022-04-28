@@ -8,6 +8,8 @@ dependencies {
     implementation "org.apache.groovy:groovy-contracts:4.0.2"
     implementation "org.apache.groovy:groovy-toml:4.0.2"
     implementation "org.apache.groovy:groovy-ginq:4.0.2"
+    implementation "org.apache.groovy:groovy-macro-library:4.0.2"
+    implementation "org.apache.groovy:groovy-typecheckers:4.0.2"
     implementation "net.jqwik:jqwik:1.6.5"
 //    runtime "commons-cli:commons-cli:1.4"
 }
