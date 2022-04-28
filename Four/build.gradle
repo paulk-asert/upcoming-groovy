@@ -17,7 +17,8 @@ dependencies {
 
 def isCandidate(String name) {
     !name.contains('Snippet')
-            && (!name.contains('JDK17') || JavaVersion.current().isCompatibleWith(JavaVersion.VERSION_17))
+            && name.contains('JDK16').implies(JavaVersion.current().isCompatibleWith(JavaVersion.VERSION_16))
+            && name.contains('JDK17').implies(JavaVersion.current().isCompatibleWith(JavaVersion.VERSION_17))
 }
 
 task runScripts(dependsOn: 'compileGroovy') {
