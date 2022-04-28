@@ -14,19 +14,37 @@ dependencies {
 //    runtime "commons-cli:commons-cli:1.4"
 }
 
-task runScripts {
+
+def isCandidate(String name) {
+    !name.contains('Snippet')
+            && (!name.contains('JDK17') || JavaVersion.current().isCompatibleWith(JavaVersion.VERSION_17))
+}
+
+task runScripts(dependsOn: 'compileGroovy') {
     description = 'run all scripts in src/main/resources'
     doLast {
         file('src/main/resources').eachFile { script ->
-            if (script.name.contains('Snippet')
-                    || (script.name.contains('JDK17') && !JavaVersion.current().isCompatibleWith(JavaVersion.VERSION_17))) {
-                ant.echo "Skipping $script"
+            String name = script.name
+            if (!isCandidate(name)) {
+                ant.echo "Skipping $name"
             } else {
-                ant.echo "Executing $script"
-                javaexec {
-                    classpath = sourceSets.main.runtimeClasspath
-                    main = 'groovy.ui.GroovyMain'
-                    args = [script.path]
+                ant.echo "Executing $name"
+                if (name.endsWith('.java')) {
+                    def path = 'build/classes/groovy/main/'
+                    ant.echo "Compiling $script"
+                    ant.javac(srcdir: script.parent, destdir: path, classpath: path, includeantruntime: false) {
+                        include(name: name)
+                    }
+                    javaexec {
+                        classpath = files(path)
+                        main = name - '.java'
+                    }
+                } else {
+                    javaexec {
+                        classpath = sourceSets.main.runtimeClasspath
+                        mainClass = 'groovy.ui.GroovyMain'
+                        args = [script.path]
+                    }
                 }
             }
         }
@@ -36,4 +54,14 @@ task runScripts {
 task console(type: JavaExec) {
     main = 'groovy.console.ui.Console'
     classpath = sourceSets.main.runtimeClasspath
+}
+
+FileUtil.baseNames(file('src/main/resources').listFiles().findAll{ isCandidate(it.name) }).each { name ->
+    task "run$name"(type: JavaExec) {
+        group 'Script'
+        description "Run ${name}.groovy as a JVM application/Groovy script"
+        classpath = sourceSets.main.runtimeClasspath
+        mainClass = 'groovy.ui.GroovyMain'
+        args = ["src/main/resources/${name}.groovy"]
+    }
 }
