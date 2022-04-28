@@ -16,11 +16,16 @@ task runScripts {
     description = 'run all scripts in src/main/resources'
     doLast {
         file('src/main/resources').eachFile { script ->
-            ant.echo script
-            javaexec {
-                classpath = sourceSets.main.runtimeClasspath
-                main = 'groovy.ui.GroovyMain'
-                args = [script.path]
+            if (script.name.contains('Snippet')
+                    || (script.name.contains('JDK17') && !JavaVersion.current().isCompatibleWith(JavaVersion.VERSION_17))) {
+                ant.echo "Skipping $script"
+            } else {
+                ant.echo "Executing $script"
+                javaexec {
+                    classpath = sourceSets.main.runtimeClasspath
+                    main = 'groovy.ui.GroovyMain'
+                    args = [script.path]
+                }
             }
         }
     }
